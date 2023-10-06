@@ -1,23 +1,25 @@
 func integerBreak(n int) int {
-    maxProd := 1
-    for k := 2 ; k <= n ; k++ {
-        currMaxProd := 1
-        div := n / k
-        rem := n % k
-        for i := 0 ; i<k ; i ++ {
-            if rem > 0 {
-                currMaxProd = currMaxProd*(div+1)
-                rem--
-            } else {
-                currMaxProd = currMaxProd*(div)
-            }
-            
-        }
-        if currMaxProd > maxProd {
-            maxProd = currMaxProd
-        }
+
+    if n ==2 {
+        return 1
+    } else if n ==3 {
+        return 2
     }
 
-    return maxProd
- 
+    maxProd := 1
+    k := n / 3
+    rem := n % 3
+
+    for i := 0 ; i < k-1 ; i++ {
+        maxProd = maxProd * 3
+    }
+
+    if rem ==0 {
+        return maxProd * 3
+    } else if rem ==1 {
+        return maxProd * 4
+    } else {
+        return maxProd * 6
+    }
+
 }
