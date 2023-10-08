@@ -1,5 +1,3 @@
-import "fmt"
-
 func maxDotProduct(nums1 []int, nums2 []int) int {
     var prod [501][501]int
 
