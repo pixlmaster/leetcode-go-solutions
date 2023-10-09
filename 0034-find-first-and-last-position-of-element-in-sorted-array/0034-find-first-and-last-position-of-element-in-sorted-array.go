@@ -1,5 +1,3 @@
-import "fmt"
-
 func findl(nums *[]int, l int, r int, target int) int {
     // base cases
     if l > r || l < 0 || r >= len(*nums){
@@ -33,7 +31,6 @@ func findr(nums *[]int, l int, r int, target int) int {
     }
     mid := (l + r)/2
 
-    fmt.Printf("%d %d %d\n",l,r,mid)
     // found
     if (*nums)[mid] == target{
         // mid is the answer
