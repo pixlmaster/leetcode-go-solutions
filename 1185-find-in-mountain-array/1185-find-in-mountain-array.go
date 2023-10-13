@@ -8,8 +8,6 @@
  * func (this *MountainArray) length() int {}
  */
 
-import "fmt"
-
 func fetchFromMountainArr(idx int, mountainArr *MountainArray, acc map[int]int) int {
     _, ok := acc[idx]
     if !ok {
@@ -31,7 +29,6 @@ func findInMountainArray(target int, mountainArr *MountainArray) int {
     // fint the peak of the mountain
     peak := findPeak(mountainArr, 0, n-1, n,acc)
 
-    fmt.Printf("%d", peak)
     // target is greater than max value in the arr
     if target > fetchFromMountainArr(peak,mountainArr, acc) {
         return -1
@@ -57,7 +54,6 @@ func findPeak(mountainArr *MountainArray , l int, r int,n int, acc map[int]int) 
         return -1
     }
     mid := ( l + r )/2
-    fmt.Printf("Mid: %d %d %d\n",mid, l , r)
 
     midElem := fetchFromMountainArr(mid, mountainArr,acc)
 
