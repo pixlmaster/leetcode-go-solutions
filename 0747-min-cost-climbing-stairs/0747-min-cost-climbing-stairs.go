@@ -1,7 +1,7 @@
 func minCostClimbingStairs(cost []int) int {
     // minCost[i] = min(minCost[i-1]+cost[i-1],minCost[i-2] + cost[i-1])
     n := len(cost)
-    var minCost = make ([]int,n+1)
+    var minCost [10001]int
 
     for cur := 0 ;cur < n+1 ; cur ++ {
         if(cur==0 || cur == 1){
