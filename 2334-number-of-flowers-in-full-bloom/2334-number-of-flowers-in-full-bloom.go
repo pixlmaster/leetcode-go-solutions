@@ -1,5 +1,4 @@
 import "sort"
-import "fmt"
 
 func fullBloomFlowers(flowers [][]int, people []int) []int {
     n := len(flowers)
@@ -25,7 +24,6 @@ func fullBloomFlowers(flowers [][]int, people []int) []int {
 func findBloom(target int, start []int, end []int, n int) int {
     bloom := binSearchStart(target,start, 0, n-1, n)
     unbloom := binSearchEnd(target,end, 0, n-1, n)
-    fmt.Printf("%d %d \n", bloom, unbloom)
     return bloom - unbloom
 }
 
