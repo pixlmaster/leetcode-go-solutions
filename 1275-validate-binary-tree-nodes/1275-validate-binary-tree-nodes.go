@@ -2,37 +2,21 @@ func validateBinaryTreeNodes(n int, leftChild []int, rightChild []int) bool {
     if(n==1){
         return true
     }
-    var parent = make(map[int]int)
+    var allChildren = make(map[int]bool)
     for i:=0 ; i < n ;i++ {
-        // ensure each node has only 1 parent
-        if leftChild[i] != -1 {
-             _ , ok := parent[leftChild[i]]
-            if ok {
-                return false
-            } else {
-                parent[leftChild[i]] = i
-            }
-        }
-
-        if rightChild[i] != -1 {
-            _ , ok := parent[rightChild[i]]
-            if ok {
-                return false
-            } else {
-                parent[rightChild[i]] = i
-            }
-        }
+        allChildren[leftChild[i]] = true
+        allChildren[rightChild[i]] = true
     }
 
     parentFound := false
     p :=-1
     for i:=0 ; i < n ;i++ {
-        _, ok := parent[i]
+        _, ok := allChildren[i]
         if !ok {
-            if !parentFound && (leftChild[i]!=-1 || rightChild[i]!=-1 ) {
+            if !parentFound{
                 parentFound = true
                 p = i
-            } else if parentFound && (leftChild[i]!=-1 || rightChild[i]!=-1 ) {
+            } else {
                 return false
             }
         }
@@ -44,7 +28,9 @@ func validateBinaryTreeNodes(n int, leftChild []int, rightChild []int) bool {
     var visited = make(map[int]bool)
 
     // do dfs
-    dfs(p, leftChild, rightChild, visited)
+    if !dfs(p, leftChild, rightChild, visited){
+        return false
+    }
     for i:=0 ; i < n ;i++ {
         _ , ok := visited[i]
         if !ok {
@@ -56,11 +42,13 @@ func validateBinaryTreeNodes(n int, leftChild []int, rightChild []int) bool {
     return true
 }
 
-func dfs(node int, leftChild []int, rightChild []int, visited map[int]bool){
+func dfs(node int, leftChild []int, rightChild []int, visited map[int]bool) bool{
+    if visited[node] == true {
+        return false
+    }
     if node == -1 {
-        return
+        return true
     }
     visited[node] = true
-    dfs(leftChild[node], leftChild,rightChild , visited)
-    dfs(rightChild[node], leftChild,rightChild , visited)
+    return (dfs(leftChild[node], leftChild,rightChild , visited) && dfs(rightChild[node], leftChild,rightChild , visited))
 }
