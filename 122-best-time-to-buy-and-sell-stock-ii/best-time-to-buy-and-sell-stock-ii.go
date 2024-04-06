@@ -5,7 +5,7 @@ func maxProfit(prices []int) int {
     }
     profit :=0
     for i:= 0 ; i < n ; i++ {
-                fmt.Println(i) 
+                // fmt.Println(i) 
 
         // search for the smallest
         smallest := 100000
