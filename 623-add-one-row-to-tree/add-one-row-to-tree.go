@@ -44,19 +44,23 @@ func addOneRow(root *TreeNode, val int, depth int) *TreeNode {
     curr := createQueue()
     curr.insert(root)
     level := 1
+    numElems := 1
     for ; level!=depth-1 ; {
-        next := createQueue()
         // remove 1 level and enqueue the next one
-        for ; !curr.empty() ; {
+        currElems :=0
+        nextElems :=0
+        for ; !curr.empty() && currElems < numElems ; currElems++ {
             node := curr.remove()
             if node.Left != nil {
-                next.insert(node.Left)
+                curr.insert(node.Left)
+                nextElems++
             }
             if node.Right != nil {
-                next.insert(node.Right)
+                curr.insert(node.Right)
+                nextElems++
             }
         }
-        curr = next
+        numElems = nextElems
         // one level has been traversed
         level++
     }
