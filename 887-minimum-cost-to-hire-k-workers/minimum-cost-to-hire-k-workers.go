@@ -1,50 +1,79 @@
 func mincostToHireWorkers(quality []int, wage []int, k int) float64 {
-    mans := []pair{}
-    for i := range quality {
-        mans = append(mans, pair{quality[i], wage[i]})
+    n := len(quality)
+    workers := make([]worker,n)
+    for i:=0; i< n ; i++ {
+        workers[i].eff = float64(wage[i])/float64(quality[i])
+        workers[i].qual = quality[i]
     }
+    sort.Slice(workers, func(i,j int)bool {
+        return workers[i].eff < workers[j].eff
+    })
 
-    sort.Slice(mans, func(i, j int) bool {
-		return float64(mans[i].w)/float64(mans[i].q) < float64(mans[j].w)/float64(mans[j].q)
-	})
+    ans := float64(1000000001)
+    h := NewHeap()
+    totalQual :=0
+    for i:=0 ;i<n ;i++ {
+        // push elements until elements in the heap reach k
+        totalQual += workers[i].qual
+        heap.Push(h, workers[i].qual)
+        // fmt.Println("pushed ", workers[i].qual)
 
-    h := &MaxHeap{}
-    minCost, curQ := 1000000001.0, 0
-    for i := range mans {
-        heap.Push(h, mans[i].q)
-        curQ += mans[i].q
+        // if we have more elements than k, pop the max quality one
         if h.Len() > k {
-            curQ -= heap.Pop(h).(int)
+            removed := heap.Pop(h)
+            // fmt.Println("removed ", removed)
+            totalQual -= removed.(int)
         }
-
-        if h.Len() == k && minCost > float64(mans[i].w)/float64(mans[i].q) * float64(curQ) {
-            minCost = float64(mans[i].w)/float64(mans[i].q) * float64(curQ)
+        // if we reach k elements calculate the minCost and update the ans
+        // calculating ratio after we reach k elements ensure that the largest of the K ratios are picked
+        // so that the threshold is crossed
+        if h.Len() == k {
+            temp := workers[i].eff * float64(totalQual)
+            if ans > temp {
+                ans = temp
+            }
         }
     }
+    return ans
 
-    return minCost
 }
 
-type pair struct {
-	q int
-	w   int
+type worker struct{
+    eff float64
+    qual int
 }
 
 type MaxHeap []int
 
-func (h MaxHeap) Len() int           { return len(h) }
-func (h MaxHeap) Less(i, j int) bool { return h[i] > h[j] }
-func (h MaxHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
-
-func (h *MaxHeap) Push(x any) {
-	*h = append(*h, x.(int))
+func (m MaxHeap)Len() int {
+    return len(m)
 }
 
-func (h *MaxHeap) Pop() any {
-	old := *h
-	n := len(old)
-	x := old[n-1]
-	*h = old[0 : n-1]
 
-	return x
+func (m MaxHeap)Less(i,j int) bool {
+    return m[i] > m[j]
+}
+
+func (m MaxHeap)Swap(i,j int) {
+    m[i] = m[i]^m[j]
+    m[j] = m[j]^m[i]
+    m[i] = m[j]^m[i]
+}
+
+func (m *MaxHeap)Push(val interface{}) {
+    *m = append(*m,val.(int))
+}
+
+func (m *MaxHeap)Pop() interface{}{
+    n:= len(*m)
+    temp := (*m)[n-1]
+    *m = (*m)[0:n-1]
+    return temp
+}
+
+// Create a new heap
+func NewHeap() *MaxHeap {
+    h := &MaxHeap{}
+    heap.Init(h)
+    return h
 }
