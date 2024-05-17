@@ -4,7 +4,7 @@ func isPalindrome(s string) bool {
     for i:=0 ; i< n ; i++ {
         result += validate(s[i])
     }
-    fmt.Println(result)
+    // fmt.Println(result)
     n=len(result)
     start := 0
     end:=n-1
