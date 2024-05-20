@@ -1,29 +1,32 @@
 func maximumValueSum(nums []int, k int, edges [][]int) int64 {
-	var totalSum int64
-	count := 0
-	positiveMin := math.MaxInt64
-	negativeMax := math.MinInt64
+    n := len(nums)
+    swapped, ans, min := constructXor(nums,n,k)
+    // fmt.Println(ans,min)
+    if swapped %2 == 0 {
+        return ans
+    }
+    return ans - min
 
-	for _, nodeValue := range nums {
-		nodeValAfterOperation := nodeValue ^ k
-		totalSum += int64(nodeValue)
-		netChange := nodeValAfterOperation - nodeValue
+}
 
-		if netChange > 0 {
-			if netChange < positiveMin {
-				positiveMin = netChange
-			}
-			totalSum += int64(netChange)
-			count++
-		} else {
-			if netChange > negativeMax {
-				negativeMax = netChange
-			}
-		}
-	}
-
-	if count%2 == 0 {
-		return totalSum
-	}
-	return int64(math.Max(float64(totalSum-int64(positiveMin)), float64(totalSum+int64(negativeMax))))
+func constructXor(nums []int, n int, k int) (int, int64 ,int64) {
+    swap := 0
+    ans:=int64(0)
+    smallest :=int64(1000000001)
+    for i:=0 ;i<n;i++ {
+        xor := int64(nums[i]^k)
+        if xor > int64(nums[i]) {
+            ans+= xor
+            swap++
+            if xor - int64(nums[i]) < smallest{
+                smallest = xor - int64(nums[i])
+            }
+        } else{
+            ans+= int64(nums[i])
+            if int64(nums[i]) - xor < smallest{
+                smallest = int64(nums[i]) - xor
+            }
+        }
+    }
+    return swap, ans, smallest
 }
