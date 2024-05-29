@@ -13,20 +13,13 @@ class Solution:
                     if carry :
                         return steps +  1
                     return steps
-            # print("before",s[i],carry,steps)
             if s[i] == '0' and not carry :                    
                 steps+=1
             elif s[i] == '1' and carry :
                 steps+=1
                 carry = True
-            elif s[i] == '0' and carry :
-                # 1
-                steps +=2
-                carry = True
             else :
-                # 1
                 steps +=2
                 carry = True
-            # print(s[i],carry,steps)
 
         return -2
