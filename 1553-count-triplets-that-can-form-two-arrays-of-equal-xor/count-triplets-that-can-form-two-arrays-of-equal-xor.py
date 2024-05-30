@@ -1,22 +1,20 @@
 class Solution:
     def countTriplets(self, arr: List[int]) -> int:
         xor = []
+        xor.append(0)
         curr = 0
-        n = len(arr)
         for elem in arr :
             curr^=elem
             xor.append(curr)
+        # print(xor)
+        n = len(xor)
+
         count = 0
         for i in range(n):
             for j in range(i+1,n):
-                ij = xor[j-1]
-                if i> 0 :
-                    ij = ij^xor[i-1]
-                for k in range(j,n):
-                    jk = xor[j-1] ^ xor[k]
-                    if ij == jk:
-                        count+=1
-        
+                # print(xor[i], xor[j])
+                if xor[i] == xor[j]:
+                    count += j-i-1
         return count
 
         
