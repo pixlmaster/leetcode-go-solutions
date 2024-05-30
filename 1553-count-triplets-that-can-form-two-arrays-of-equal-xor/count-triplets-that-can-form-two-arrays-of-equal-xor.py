@@ -15,7 +15,6 @@ class Solution:
                 for k in range(j,n):
                     jk = xor[j-1] ^ xor[k]
                     if ij == jk:
-                        # print(i,j,k,ij,jk)
                         count+=1
         
         return count
