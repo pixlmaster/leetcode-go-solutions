@@ -20,7 +20,7 @@ class Solution:
                     matrix[r][0] = 0
                     matrix[0][c] = 0
         
-        print(matrix)
+        # print(matrix)
 
         for c in range(1,col):
             if matrix[0][c] == 0:
