@@ -7,28 +7,26 @@
 class BSTIterator:
 
     def __init__(self, root: Optional[TreeNode]):
-        self.inorder = []
-        self.itr = -1
-        self.traverse(root,self.inorder)
-        self.n = len(self.inorder)
-
+        self.stack =deque()
+        while root !=None:
+            self.stack.append(root)
+            root = root.left
 
     def next(self) -> int:
-        self.itr+=1
-        return self.inorder[self.itr]
+        node = self.stack.pop()    
+        r = node.right
+        while r :
+            self.stack.append(r)
+            r= r.left
+                
+        return node.val
+
         
 
     def hasNext(self) -> bool:
-        if self.itr + 1 < self.n:
+        if len(self.stack):
             return True
         return False
-
-    def traverse(self,root: TreeNode, curr: List[int]) -> None:
-        if not root:
-            return
-        self.traverse(root.left,curr)
-        curr.append(root.val)
-        self.traverse(root.right,curr)
         
 
 
