@@ -1,19 +1,20 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        return self.generate(n)
+        # backtracking takes in open avail, right avail
+        # use right only if right> left
+        # left can be used anytime
+        ans = []
+        self.recurse(n,n,"",ans)
+        return ans
 
-    def generate(self, n: int) -> set[str]:
-        curr = set()
-        if n==1:
-            curr.add("()")
-            return curr
+    def recurse(self,op: int, close: int, curr: str, ans : List[str]) ->None:
+        if op ==0 and close ==0:
+            ans.append(curr)
+            return
+        # use open
+        if op > 0:
+            self.recurse(op-1,close, curr +"(", ans)
         
-        permutations = self.generate(n-1)
-        for perm in permutations:
-            for itr in range(len(perm)+1):
-                copy = perm[:itr] + "()" + perm[itr:]
-                curr.add(copy)
-        return curr
-
-
-
+        if close>0 and close >op :
+            self.recurse(op,close-1, curr +")", ans)
+        
