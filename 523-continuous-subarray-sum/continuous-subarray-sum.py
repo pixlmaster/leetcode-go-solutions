@@ -7,7 +7,7 @@ class Solution:
         if n<=1:
             return False
         hmap = {}
-        numMax, numMin = self.preProcess(nums,k, hmap)
+        numMax = self.preProcess(nums,k, hmap)
         for sidx,num in enumerate(nums):
             for toSearch in range(num,numMax+1,k):
                 # search for higher number present
@@ -20,7 +20,6 @@ class Solution:
     
     def preProcess(self, nums: List[int], k  : int, hmap : dict[int,int]) :
         nums.insert(0,0)
-        numMin = float("+inf")
         numMax = float("-inf")
         hmap[nums[0]] = 0
         for i in range(1,len(nums)):
@@ -28,8 +27,7 @@ class Solution:
             nums[i] += nums[i-1]
             hmap[nums[i]] = i
             numMax = max(numMax,nums[i])
-            numMin = min(numMin, nums[i])
         
-        return numMax, numMin
+        return numMax
             
             
