@@ -18,7 +18,6 @@ class Solution:
                 nums[startPtr] = nums[currPtr]
                 nums[currPtr] = temp
                 startPtr += 1
-                currPtr = max(currPtr,startPtr)
             elif nums[currPtr] == 1:
                 currPtr+=1
             else:
@@ -26,4 +25,4 @@ class Solution:
                 nums[endPtr] = nums[currPtr]
                 nums[currPtr] = temp
                 endPtr -= 1
-            # print(nums)
+            currPtr = max(currPtr,startPtr)
