@@ -1,12 +1,12 @@
 
 class Solution:
     def judgeSquareSum(self, c: int) -> bool:
-
+        store = set()
         for num in range(0,c+1):
-            toSearch = c - num*num
-            if toSearch < 0:
+            if c - num*num < 0:
                 break
-            if math.sqrt(toSearch)%1 ==0:
+            store.add(num*num)
+            if c - num*num in store:
                 return True
         
         
