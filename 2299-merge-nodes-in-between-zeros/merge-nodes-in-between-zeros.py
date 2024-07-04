@@ -11,10 +11,8 @@ class Solution:
         set node = node.next and reset the sum
         """
 
-
         prev = head
         orig = head
-
         head = head.next
         currSum = 0
         
