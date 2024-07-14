@@ -1,18 +1,39 @@
 class Solution:
-    def maxDistance(self, position: List[int], m: int) -> int:
+    def maxDistance(self, position: list[int], m: int) -> int:
+        """
+        Binary search on the solution with min dist x
+        if you can place it, try between x and max
+        if you cannot, search between this and last tried
+        """
         position.sort()
-        l, r = 1, position[-1] - position[0]
-        ans = -1
-        while l <= r:
-            mid = l + (r - l) // 2
-            last_position, balls = position[0], 1
-            for i in range(1, len(position)):
-                if position[i] - last_position >= mid:
-                    last_position = position[i]
-                    balls += 1
-            if balls >= m:
+        n = len(position)
+        if n == 2:
+            return position[1] - position[0]
+        left = 1
+        right = position[-1] - position[0]
+        ans = 0
+        while left <= right:
+            mid = (left + right) // 2
+            if self.placeWithMinDistance(position, mid, m):
+                left = mid + 1
                 ans = mid
-                l = mid + 1
             else:
-                r = mid - 1
+                right = mid - 1
         return ans
+
+    def placeWithMinDistance(self, position: list[int], gap: int, balls: int) -> bool:
+        balls -= 1
+        idx = 1
+        lastIdx = 0
+        while balls > 0:
+            if idx >= len(position):
+                return False
+            if position[idx] - position[lastIdx] >= gap:
+                # place the ball
+                balls -= 1
+                lastIdx = idx
+                idx += 1
+            else:
+                idx += 1
+
+        return True
