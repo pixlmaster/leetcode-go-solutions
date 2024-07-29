@@ -4,18 +4,13 @@ class Solution:
         go over each element and store the elements greater than this element and less than the element after the current index
         """
         n = len(rating)
-        lmap = {}
         gmap = {}
         for idx in range(n):
             curr = rating[idx]
-            lmap[curr] = 0
             gmap[curr] = 0
             for nextIdx in range(idx + 1, n):
-                next = rating[nextIdx]
-                if next > curr:
+                if rating[nextIdx] > curr:
                     gmap[curr] += 1
-                else:
-                    lmap[curr] += 1
         ans = 0
         for i1 in range(n-2):
             s1 = rating[i1]
@@ -24,6 +19,6 @@ class Solution:
                 if s2 > s1 :
                     ans += gmap[s2]
                 else:
-                    ans += lmap[s2]
+                    ans += n-i2-1 - gmap[s2]
         
         return ans
