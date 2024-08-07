@@ -80,12 +80,12 @@ class Solution:
         if n >= self.digBillion:
             numBillions = int(snum[-self.digBillion - 2:-self.digMillion-2])
 
-        print("ones", numOnes)
-        print("tens", numTens)
-        print("hundred", numHundreds)
-        print("thousand", numThousands)
-        print("million", numMillions)
-        print("billion", numBillions)
+        # print("ones", numOnes)
+        # print("tens", numTens)
+        # print("hundred", numHundreds)
+        # print("thousand", numThousands)
+        # print("million", numMillions)
+        # print("billion", numBillions)
         ans = ""
 
         if numBillions > 0:
