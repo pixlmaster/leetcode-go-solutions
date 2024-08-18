@@ -22,7 +22,7 @@ class Solution:
         current = 1
         elems = [1]
         itr = 0
-        for i in range(n):
+        while(len(elems)<=2*n):
             self.insort_unique(elems, current * 2)
             self.insort_unique(elems, current * 3)
             self.insort_unique(elems, current * 5)
