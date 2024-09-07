@@ -13,7 +13,7 @@ class Solution:
             return False
         if root.val == firstVal:
             check = self.checkPath(head, root)
-            print(root.val,check)
+            # print(root.val,check)
             if check:
                 return True
         left = self.dfs(head, root.left, firstVal)
